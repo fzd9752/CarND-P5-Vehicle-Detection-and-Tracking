@@ -52,7 +52,7 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 
 > NOTICE: Because of the skimage_deprecation, my `block_norm` parameter in `skimage.hog()` automatically uses `L2-Hys` as the default value.
 
-####2. Explain how you settled on your final choice of HOG parameters.
+#### 2. Explain how you settled on your final choice of HOG parameters.
 
 I started to tune the HOG parameters from the colour space choice. I tried different colour spaces and their channels. Most of the colour spaces only have 1-2 channels responded HOG well. As above example showing, `Y` channel could present an obvious differences between *car* and *not-car*. Taken account of the speed of conversion and performance of HOG, I choose 3 channels of `YCrCb` colour space.
 
@@ -60,7 +60,7 @@ For increasing the process speed, I maximised the number of pixels in each cell 
 
 Then I decided the parameters mentioned above, which showed a not bad performance on training model test.
 
-####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and colour features if you used them).
+#### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and colour features if you used them).
 
 At **_Step 2_** I used `extract_features()` to combine three colour channels' HOG, Colour Histogram and Spatial features to prepare the data. Feature vector length is 4356. Before fed in the model, I've normalised the features. Then, I shuffled and split the data into the training set and test set.
 
@@ -95,11 +95,11 @@ Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spat
 
 ### Video Implementation
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
+#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 Here's a [link to my video result][video1]
 
 
-####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
 I recorded the positions of positive detections in each frame of the video.  From the positive detections, I created a heat-map and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heat-map.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
 
@@ -114,9 +114,9 @@ Here's an example result showing the heat-map from test images, the result of `s
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 The issue I've met in this project is the trade-off between accuracy and speed. To build a laptop-could-launched pipeline, I gave up the high-performance parameters of the HOG and the multi-scaled sliding techs. Those indeed accelerated my pipeline speed, but it also brought risks in. like the relatively low recognition for the white car, and the slow responses for the entering car (big size, actually).
 
